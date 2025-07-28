@@ -38,6 +38,7 @@ import (
 	"k8c.io/machine-controller/pkg/cloudprovider/provider/opennebula"
 	"k8c.io/machine-controller/pkg/cloudprovider/provider/openstack"
 	"k8c.io/machine-controller/pkg/cloudprovider/provider/scaleway"
+	"k8c.io/machine-controller/pkg/cloudprovider/provider/stackit"
 	vcd "k8c.io/machine-controller/pkg/cloudprovider/provider/vmwareclouddirector"
 	"k8c.io/machine-controller/pkg/cloudprovider/provider/vsphere"
 	"k8c.io/machine-controller/pkg/cloudprovider/provider/vultr"
@@ -113,6 +114,9 @@ var (
 		},
 		providerconfig.CloudProviderExternal: func(cvr providerconfig.ConfigVarResolver) cloudprovidertypes.Provider {
 			return external.New(cvr)
+		},
+		providerconfig.CloudProviderStackit: func(cvr providerconfig.ConfigVarResolver) cloudprovidertypes.Provider {
+			return stackit.New(cvr)
 		},
 	}
 

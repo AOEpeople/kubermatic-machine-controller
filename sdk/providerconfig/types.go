@@ -76,6 +76,7 @@ const (
 	CloudProviderBaremetal           CloudProvider = "baremetal"
 	CloudProviderExternal            CloudProvider = "external"
 	CloudProviderOpenNebula          CloudProvider = "opennebula"
+	CloudProviderStackit             CloudProvider = "stackit"
 )
 
 var (
@@ -114,6 +115,7 @@ var (
 		CloudProviderVultr,
 		CloudProviderOpenNebula,
 		CloudProviderExternal,
+		CloudProviderStackit,
 	}
 )
 

@@ -1,0 +1,55 @@
+apiVersion: cluster.k8s.io/v1alpha1
+kind: MachineDeployment
+metadata:
+  name: stackit-machine-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: stackit-machine
+  template:
+    metadata:
+      labels:
+        name: stackit-machine
+    spec:
+      providerSpec:
+        value:
+          cloudProvider: "stackit"
+          cloudProviderSpec:
+            token:
+              secretKeyRef:
+                namespace: kube-system
+                name: machine-controller-stackit
+                key: token
+
+            # Required
+            projectID: "<< PROJECT_ID >>"
+            machineType: "g1.1"
+
+            # Commonly configurable
+            availabilityZone: "eu01-1"
+            bootVolumeSize: 64
+            bootVolumeImageId: "<< IMAGE_ID >>"
+            labels:
+              purpose: "kubernetes-worker"
+              managed-by: "machine-controller"
+              cluster: "stackit-cluster"
+            network: "<< NETWORK_ID >>"
+            securityGroups:
+              - "default"
+            keypairName: "my-ssh-key"
+
+            # Optional/Advanced
+            affinityGroup: "my-affinity-group"
+            serviceAccountMails:
+              - "service@example.com"
+            volumes:
+              - "volume-uuid-1"
+              - "volume-uuid-2"
+      versions:
+        kubelet: "1.24.0"
+      metadata:
+        labels:
+          node-role.kubernetes.io/worker: ""
+          node-role.kubernetes.io/stackit: ""
